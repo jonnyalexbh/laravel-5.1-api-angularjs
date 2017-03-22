@@ -20,7 +20,8 @@ class NoteController extends Controller
   */
   public function index()
   {
-    //
+    $notes = Note::all();
+    return $notes;
   }
 
   /**
@@ -42,7 +43,7 @@ class NoteController extends Controller
   public function store(Request $request)
   {
     Note::create($request->all());
-    return response()->json(["message" => "Created correctly"]);
+    return ["message" => "Created correctly"];
   }
 
   /**
