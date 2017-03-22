@@ -2,8 +2,17 @@
 
 angular.module('myApp')
 
-.controller('IndexNoteCtrl', function ($scope, NoteResource) {
+.controller('IndexNoteCtrl', function ($scope, NoteResource, $location, $timeout) {
   $scope.Notes = NoteResource.query();
+  $scope.removeNote = function(id) {
+    NoteResource.delete({
+      id: id
+    });
+    Materialize.toast('Deleted Note.', 5000, 'green accent-4');
+    $timeout(function() {
+      $location.path('/notes');
+    }, 1000);
+  };
 })
 
 .controller('CreateNoteCtrl', function($scope, NoteResource, $location, $timeout){
@@ -12,7 +21,7 @@ angular.module('myApp')
   $scope.Note = {};
   $scope.saveNote = function(){
     NoteResource.save($scope.Note);
-    Materialize.toast('Nota Creada.',5000,'green accent-4');
+    Materialize.toast('Note Created.',5000,'green accent-4');
     $timeout(function(){
       $location.path('/notes');
     },1000);
